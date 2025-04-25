@@ -11,6 +11,9 @@ dependencies:
     sdk: flutter
   qr_flutter: ^4.1.0
   flutter_modular: ^6.3.4
+  flutter_hooks: ^0.21.2
+  mobile_scanner: ^6.0.10
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +22,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/qrs/
+
+

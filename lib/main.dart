@@ -1,7 +1,9 @@
-import 'package:app/features/scan/scan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'package:app/features/home/pages/home_page.dart';
+import 'package:app/features/home/pages/create_page.dart';
+// import 'package:app/features/home/pages/scan_page.dart';
 
 
 void main(){
@@ -28,8 +30,11 @@ class AppModule extends Module {
   @override
   void routes(r) {
     r.child('/', child: (context) => HomePage());
+    // r.child('/scan', child: (context) => ScanPage());
+    r.child('/create', child: (context) => CreatePage());
   }
 }
+
 
 
 
