@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import 'package:app/features/home/pages/home_page.dart';
 import 'package:app/features/home/pages/create_page.dart';
-import 'package:app/core/data_products.dart';
+import 'package:app/features/home/models/data_products.dart';
 // import 'package:app/features/home/pages/scan_page.dart';
 
 
