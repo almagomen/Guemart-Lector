@@ -5,19 +5,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 
 class HomePage extends HookWidget { 
-  const HomePage({super.key});
+
+  final Map<String, int> initialProducts;
+  const HomePage({super.key, required this.initialProducts});
 
   @override
   Widget build(BuildContext context) {
-    // Hook to manage the list of scanned results
     final scannedResults = useState<List<String>>([]);
-    final productList = useState<Map<String, int>>({
-      'lente': 2,
-      'gorra': 3,
-      'camisa': 1,
-      'pantalon': 2,
-      'guante': 4,
-    });
+    final products = useState<Map<String, int>>(initialProducts);
 
     Future<void> scanQRCode() async {
       // Navigate to a scanner page and wait for the result
@@ -27,12 +22,12 @@ class HomePage extends HookWidget {
 
       if (result != null && result.isNotEmpty) {
         final lowerCaseResult = result.toLowerCase();
-        if (productList.value.containsKey(lowerCaseResult)) {
+        if (products.value.containsKey(lowerCaseResult)) {
           // Decrease the quantity of the product
-          final currentQuantity = productList.value[lowerCaseResult]!;
+          final currentQuantity = products.value[lowerCaseResult]!;
           if (currentQuantity > 0) {
-            productList.value = {
-              ...productList.value,
+            products.value = {
+              ...products.value,
               lowerCaseResult: currentQuantity - 1,
             };
             scannedResults.value = [...scannedResults.value, result];
@@ -81,10 +76,10 @@ class HomePage extends HookWidget {
 
                       // Increment the product quantity back in the product list
                       final lowerCaseResult = result.toLowerCase();
-                      if (productList.value.containsKey(lowerCaseResult)) {
-                        final currentQuantity = productList.value[lowerCaseResult]!;
-                        productList.value = {
-                          ...productList.value,
+                      if (products.value.containsKey(lowerCaseResult)) {
+                        final currentQuantity = products.value[lowerCaseResult]!;
+                        products.value = {
+                          ...products.value,
                           lowerCaseResult: currentQuantity + 1,
                         };
                       }
@@ -120,13 +115,13 @@ class HomePage extends HookWidget {
             const SizedBox(height: 20),
 
             const Text(
-              'Lista de productos:',
+              'Lista de products:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 10),
 
-            ...productList.value.entries.map((entry) => Card(
+            ...products.value.entries.map((entry) => Card(
                 color: entry.value == 0 ? Colors.lightGreen[100] : Colors.amber[100],
                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 elevation: 0,
