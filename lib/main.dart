@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:app/utils/theme/theme.dart';
 
 import 'package:app/features/home/pages/home_page.dart';
 import 'package:app/features/home/pages/create_page.dart';
 import 'package:app/features/home/models/data_products.dart';
-// import 'package:app/features/home/pages/scan_page.dart';
+
 
 
 void main(){
+  debugPaintSizeEnabled = false; // Disable the debug paint size
+  debugPaintLayerBordersEnabled = false; // Disable the debug paint layer borders
+  debugPaintBaselinesEnabled = false; // Disable the debug paint baselines
+  debugPaintPointersEnabled = false; // Disable the debug paint pointers
+  debugRepaintRainbowEnabled = false; // Disable the debug repaint rainbow
+
   return runApp(ModularApp(module: AppModule(), child: AppWidget()));
 }
 
@@ -18,7 +26,9 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context){
     return MaterialApp.router(
       title: 'Scan QR',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: GuapliAppTheme.lightTheme,
+      darkTheme: GuapliAppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       routerConfig: Modular.routerConfig,
     );
   }

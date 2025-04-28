@@ -11,14 +11,19 @@ class ProductCard extends HookWidget {
   Widget build(BuildContext context) {
     // Controlador de animación
     final animationController = useAnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 700),
     );
 
     // Definición de las animaciones
+
+    
+
     final positionAnimation = useMemoized(
-      () => Tween<double>(begin: 0, end: -150).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
-      ),
+      () {        
+        return Tween<double>(begin: 0, end: -350).animate(
+          CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
+        );
+      },
       [animationController],
     );
 
@@ -29,13 +34,16 @@ class ProductCard extends HookWidget {
       [animationController],
     );
 
-    // Valor previo de entry.value
+        // Valor previo de entry.value
     final previousValue = useRef(entry.value);
 
     // Efecto para disparar la animación cuando entry.value disminuye
     useEffect(() {
       if (entry.value < previousValue.value) {
-        animationController.forward();
+        animationController.reset(); // Reset the animation
+        Future.delayed(const Duration(milliseconds: 300), () { // Agregar un delay de 500ms          
+          animationController.forward(); // Start the animation
+        });
       }
       previousValue.value = entry.value;
       return null;
@@ -72,7 +80,7 @@ class ProductCard extends HookWidget {
                     opacity: opacityAnimation,
                     child: CircleAvatar(
                       radius: 15,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: animationController.isAnimating ? Colors.red : Colors.blue, // Cambiar a rojo si está animando
                       child: Text(
                         '${entry.value}',
                         style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),

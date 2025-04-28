@@ -1,7 +1,7 @@
 const products = {
-  'camisa': 2,
-  'pantalon': 3,
-  'gorra': 3,
-  'lente': 4,
-  'boxer': 1,  
+  'camisa': 1,
+  'pantalon': 1,
+  'gorra': 1,
+  // 'lente': 4,
+  // 'boxer': 1,  
 };
