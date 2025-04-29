@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
 
-void showCustomToast(BuildContext context, String message, Color backgroundColor) {
-  final overlay = Overlay.of(context);
-  final overlayEntry = OverlayEntry(
-    builder: (context) => Positioned(
-      top: 100.0, // Cambiado para que aparezca desde la parte superior con un padding de 100
-      left: MediaQuery.of(context).size.width * 0.1,
-      right: MediaQuery.of(context).size.width * 0.1,
-      child: Material(
-        color: Colors.transparent,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Text(
+
+void showAnimatedDialog(BuildContext context, String message, Color backgroundColor, IconData iconData, String actionText) {
+  final dialogWidget = Dialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
             message,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
               fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
-        ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("Close"),
+          ),
+        ],
       ),
     ),
   );
 
-  overlay.insert(overlayEntry);
-  Future.delayed(const Duration(milliseconds: 1500), () {
-    overlayEntry.remove();
-  });
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "",
+    pageBuilder: (context, animation1, animation2) => Container(),
+    transitionBuilder: (context, animation1, animation2, child) {
+      return FadeTransition(
+        opacity: CurvedAnimation(parent: animation1, curve: Curves.easeIn),
+        child: dialogWidget,
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 300),
+  );
 }
 
 void processScanned(BuildContext context, String result, ValueNotifier<Map<String, int>> products, ValueNotifier<List<String>> scannedResults) {
@@ -45,11 +55,11 @@ void processScanned(BuildContext context, String result, ValueNotifier<Map<Strin
       products.value = {...products.value, lowerCaseResult: currentQuantity - 1};
       scannedResults.value = [...scannedResults.value, result];
       // Uncomment if needed
-      // showCustomToast(context, 'Producto "$result" encontrado y añadido al drawer', Colors.green);
+      // showAnimatedDialog(context, 'Producto "$result" encontrado y añadido al drawer', Colors.green);
     } else {
-      showCustomToast(context, 'Producto "$result" está agotado', Colors.red);
+      showAnimatedDialog(context, 'Producto "$result" está agotado', Colors.red, Icons.error, "Cerrar");
     }
   } else {
-    showCustomToast(context, 'Producto "$result" no encontrado', Colors.orange);
+    showAnimatedDialog(context, 'Producto "$result" no encontrado', Colors.orange, Icons.warning, "Cerrar");
   }
 }

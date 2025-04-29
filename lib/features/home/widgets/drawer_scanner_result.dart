@@ -1,3 +1,4 @@
+import 'package:app/features/welcome/pages/view_page.dart';
 import 'package:flutter/material.dart';
 
 class DrawerScannerResult extends StatelessWidget {
@@ -59,7 +60,7 @@ class DrawerScannerResult extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: allZero
-                      ? () {Navigator.push(context, MaterialPageRoute(builder: (context) => const NextPage()));}
+                      ? () => Navigator.of(context).pushNamed('/packages')
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: allZero ? Colors.green : Colors.grey,

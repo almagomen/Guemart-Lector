@@ -10,7 +10,7 @@ class ElevBttnContinue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => Modular.to.navigate('/packaging'),
+      onPressed: () => Modular.to.navigate('/packages'),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text(

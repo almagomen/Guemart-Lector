@@ -9,17 +9,18 @@ import 'package:app/features/home/controllers/process_scanned.dart';
 import 'package:app/features/home/widgets/drawer_scanner_result.dart';
 import 'package:app/commons/widgets/qr_icon.dart';
 import 'package:app/features/home/widgets/app_bar.dart';
-import 'package:app/features/home/widgets/product_list.dart';
+import 'package:app/features/packages/widgets/product_list.dart';
 import 'package:app/features/home/pages/scan_page.dart';
+import 'package:app/commons/models/packages_data.dart';
 
-class HomePage extends HookWidget {
-  final Map<String, int> initialProducts;
-  const HomePage({super.key, required this.initialProducts});
+class HomePage extends HookWidget {  
+  final Map<String, int>? initialProducts;
+  const HomePage({super.key, this.initialProducts});
 
   @override
   Widget build(BuildContext context) {
     final scannedResults = useState<List<String>>([]);
-    final products = useState<Map<String, int>>(initialProducts);
+    final products = useState<Map<String, int>>(initialProducts ?? products1);
 
     Future<void> scanQRCode() async {
       final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const QRScannerPage()));
